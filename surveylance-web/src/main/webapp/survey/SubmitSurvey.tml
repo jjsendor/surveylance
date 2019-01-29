@@ -1,0 +1,16 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<t:if test="${submitted}">
+		<script type="text/javascript">
+			function showError() {
+				var message = new MessageBox("${message:survey-already-submitted}", "error");
+				message.show();
+			}
+			dojo.addOnLoad(showError);
+		</script>
+		<t:parameter name="else">
+			<h1>${message:submit-survey-confirmation}</h1>
+		</t:parameter>
+	</t:if>
+
+</t:Layout>

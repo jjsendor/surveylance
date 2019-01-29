@@ -1,0 +1,26 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.username">${hibernate.connection.username}</property>
+		<property name="hibernate.connection.password">${hibernate.connection.password}</property>
+		<property name="hibernate.connection.url">jdbc:mysql://${hibernate.connection.host}/${hibernate.connection.database}</property>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Answer"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Component"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Decision"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.ForkComponent"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Form"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.NumericAnswer"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Question"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.Survey"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.SurveyResult"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.TextAnswer"/>
+		<mapping class="pl.edu.agh.iosr.surveylance.entities.User"/>
+	</session-factory>
+</hibernate-configuration>

@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<script type="text/javascript" src="js/gears/gears_init.js"></script>
+		<script type="text/javascript" src="js/gears/gears.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Query.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Gears.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Sql.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Field.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.ModelMetaData.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Model.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.Events.js"></script>
+		<script type="text/javascript" src="js/jstorm/JStORM.SQLite.Introspection.js"></script>
+		<script type="text/javascript" src="js/jstorm/gears_model.js"></script>
+		<script type="text/javascript">
+			function gears_dropDbTables() {
+				gears.Author.dropTable();
+				gears.Component.dropTable();
+				gears.Survey.dropTable();
+				gears.Question.dropTable();
+				gears.Fork.dropTable();
+				gears.Answer.dropTable();
+				gears.Decision.dropTable();
+				gears.SurveyResult.dropTable();
+			}
+			// dropping all tables
+			
+			gears_dropDbTables();
+			gears_createDbTables();
+		</script>
+	</head>
+	<body></body>
+</html>

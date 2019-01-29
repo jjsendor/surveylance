@@ -1,0 +1,6 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<h1>Przygotowano dane testowe</h1>
+	<t:loop source="surveysIDs" value="surveyID">
+	<h2>Id wygenerowanej ankiety: ${surveyID}</h2>
+	</t:loop>
+</t:Layout>

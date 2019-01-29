@@ -1,0 +1,38 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<t:if test="created">
+	<script type="text/javascript">
+		if (gears.available()) {
+			var rootComponent = new Component(
+					null,
+					${survey.rootComponent.modifications},
+					0,
+					null,
+					${survey.rootComponent.id});
+			
+			var survey = new Survey(
+					"${survey.name}",
+					${survey.modifications},
+					"${survey.description}",
+					"${survey.expirationDate}",
+					rootComponent,
+					${survey.id});
+			
+			gears.survey.create(survey);
+		}
+	</script>
+	</t:if>
+
+	<h1>${message:survey-created}</h1>
+
+	<p>
+		<t:pagelink page="survey/edit" context="survey.id">
+			${message:click-to-edit-survey}
+		</t:pagelink>
+		${message:or}
+		<t:pagelink page="survey/list">
+			${message:back-to-survey-list}
+		</t:pagelink>
+	</p>
+
+</t:Layout>

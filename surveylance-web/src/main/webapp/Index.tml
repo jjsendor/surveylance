@@ -1,0 +1,29 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<ul id="welcome_menu">
+		<li id="surveys_link">
+			<t:pagelink page="survey/list">
+				<img src="images/surveys.png" alt="${message:surveys}" />
+				<span>${message:surveys}</span>
+			</t:pagelink>
+		</li>
+		<li id="analyses_link">
+			<t:pagelink page="result/SurveyList">
+				<img src="images/analyses.png" alt="${message:analysis}" />
+				<span>${message:analysis}</span>
+			</t:pagelink>
+		</li>
+		<li id="contacts_link">
+			<t:pagelink page="contact/list">
+				<img src="images/contacts.png" alt="${message:contacts}" />
+				<span>${message:contacts}</span>
+			</t:pagelink>
+		</li>
+		<li id="calendar_link">
+			<t:pagelink page="calendar/list">
+				<img src="images/calendar.png" alt="${message:calendar}" />
+				<span>${message:calendar}</span>
+			</t:pagelink>
+		</li>
+	</ul>
+</t:Layout>

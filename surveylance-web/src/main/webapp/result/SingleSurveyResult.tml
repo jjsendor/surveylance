@@ -1,0 +1,71 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<script type="text/javascript">
+		dojo.require("dojox.charting.Chart2D");
+		var chart;
+
+		dojo.addOnLoad(function() {
+			<t:loop source="questions" value="question">
+			<t:if test="${openQuestion}" negate="true">
+				chart = new dojox.charting.Chart2D("bars" + ${question.id});
+				chart.addAxis("x", {min: 0});
+				chart.addAxis("y", {vertical: true, labels: ${labels}});
+				chart.addPlot("default", {
+					hAxis: "x",
+					vAxis: "y",
+					type: "Bars",
+					areas: true,
+					gap: 10
+				});
+				chart.addSeries("Series 1", ${quantities});
+				dojo.require("dojox.charting.themes.PlotKit.blue");
+				chart.setTheme(dojox.charting.themes.PlotKit["blue"]);
+				chart.render();
+			</t:if>
+			</t:loop>
+		});
+	</script>
+
+	<h1>${message:single-survey-analysis}</h1>
+	<hr/>
+
+	<ul>
+		<t:loop source="questions" value="question">
+		<li>
+			<div class="questionResultTable">
+				<t:if test="${openQuestion}">
+				<h3>${question.content}</h3>
+				<table>
+					<thead>
+						<tr>
+							<th class="res">${message:result}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t:loop source="singleResults" value="result">
+							<tr>
+								<td>${result.first}</td>
+							</tr>
+						</t:loop>
+					</tbody>
+				</table>
+				<t:parameter name="else">
+					<h3>${question.content}</h3>
+					<div id="question1" >
+						<div id="bars${question.id}" style="width: 100%; height: 350px;"></div>
+							<table>
+								<thead>	
+								</thead>
+								<tbody>
+									<tr class="answered">
+										<td>1</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</t:parameter>
+				</t:if>
+			</div>
+		</li>
+		</t:loop>
+	</ul>
+</t:Layout>

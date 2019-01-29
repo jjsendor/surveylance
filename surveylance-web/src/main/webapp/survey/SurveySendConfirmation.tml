@@ -1,0 +1,5 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:sent-successfully}</h1>
+
+</t:Layout>

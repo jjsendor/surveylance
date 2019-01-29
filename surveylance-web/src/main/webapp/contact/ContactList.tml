@@ -1,0 +1,100 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:contacts}</h1>
+	
+	<t:if t:test="mailAdded">
+		<div>
+			<h4>${message:currently-added-contacts}</h4>
+			
+			<t:loop source="addedMails" value="mail" xml:space="preserve">
+				<t:actionlink t:context="mail" t:id="delete">${mail}</t:actionlink>
+			</t:loop>
+		</div>
+		
+		
+		<t:parameter name="else">    
+			<h4>${message:currently-there-are-no-added-contacts}</h4>
+		</t:parameter> 
+	</t:if>
+	
+<!--
+	<div>
+		<h4>${message:currently-existing-groups}</h4>
+		<t:loop source="groupNames" value="group" xml:space="preserve">
+			${group}
+		</t:loop>
+	</div>
+-->
+	
+	<hr/>
+	
+	<div>
+		<t:pagelink t:page="contact/addContact"><b>${message:add-new-contact}</b></t:pagelink>
+	</div>
+<!--	
+	<div>
+		<t:pagelink t:page="contact/addGroup"><b>${message:add-new-group}</b></t:pagelink>
+	</div>
+-->
+		
+	<br/>
+
+	<t:grid t:source="contacts" 
+		row="contact" 
+		add="edit,addToSurvey"
+		exclude="groupsExist"
+		rowsPerPage="20"
+		pagerPosition="top">
+		
+		<t:parameter name="editCell">
+			<t:pagelink t:page="contact/edit" t:context="contact.mail"><b>${message:edit}</b></t:pagelink>
+		</t:parameter>
+		
+		<t:parameter name="addToSurveyCell">
+			<t:actionlink t:context="contact.mail" t:id="add">${message:add}</t:actionlink>
+		</t:parameter>
+		
+<!-- GROUPS -->
+		<t:parameter name="groupsCell">
+		
+			<t:if t:test="contact.groupsExist">
+				<div>
+					<t:loop source="contact.groups" value="group" xml:space="preserve">
+						${group}
+					</t:loop>
+				</div>
+				
+				
+				<t:parameter name="else">    
+					no groups:]
+				</t:parameter> 
+			</t:if>
+			
+
+		</t:parameter>
+<!-- GROUPS -->
+
+	</t:grid>
+
+	
+	
+	
+	
+	<!--
+	    <t:form t:id="gridform">
+        <t:grid
+            source="CompanyList" rowsPerPage="10" pagerPosition="both"
+
+include="valitud,businessName,registryCode,addressName,postalCode,streetField"
+            t:rowClass="prop:evenodd.next"
+            row="ariregitem">
+                <t:parameter name="valitudCell">
+                <t:checkbox value="ariregItem.valitud"/>
+            </t:parameter>
+        </t:grid>
+        <t:submit value="Salvesta firmad"/>
+    </t:form> 
+    -->
+	
+
+</t:Layout>

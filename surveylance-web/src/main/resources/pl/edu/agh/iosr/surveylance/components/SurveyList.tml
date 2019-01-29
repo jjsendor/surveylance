@@ -1,0 +1,7 @@
+<div xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<ul>
+		<t:loop source="surveys" value="survey">
+			<li><t:pagelink page="survey/view" context="survey.id">${surveyDescription}</t:pagelink></li>
+		</t:loop>
+	</ul>
+</div>

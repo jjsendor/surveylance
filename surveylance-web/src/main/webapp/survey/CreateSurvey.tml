@@ -1,0 +1,14 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:create-new-survey}</h1>
+
+	<t:beaneditform t:id="survey" submitlabel="message:create-survey"
+		exclude="modifications">
+		<t:parameter name="expirationDate">
+			<t:label for="expirationDate"/>
+			<input t:type="DateField" t:id="expirationDate"
+				value="survey.expirationDate"/>
+		</t:parameter>
+	</t:beaneditform>
+
+</t:Layout>

@@ -1,0 +1,66 @@
+.edit_panel {
+	clear: right;
+}
+
+#surveys_chooser_wrapper {
+	clear: both;
+	margin: 25px auto 15px;
+	width: 200px;
+}
+
+#surveys_chooser_wrapper legend {
+	margin: 15px;
+	text-align: center;
+}
+
+#surveys_chooser li {
+	list-style-type: none;
+	background-color: #fff;
+	height: 24px;
+	line-height: 24px;
+	padding: 4px 2px;
+	vertical-align: bottom;
+	border: none 2px #000;
+}
+
+#surveys_chooser li.dojoDndItem {
+	cursor: pointer;
+}
+
+#surveys_chooser li.dojoDndItemAnchor {
+	background-color: #98CCED;
+}
+
+#surveys_chooser li.dojoDndItemOver {
+	background-color: #6B88B2;
+}
+
+#surveys_chooser li.dojoDndItemBefore {
+	border-top-style: solid;
+}
+
+#surveys_chooser li.dojoDndItemAfter {
+	border-bottom-style: solid;
+}
+
+.dojoDndAvatar {
+	border-collapse: collapse;
+}
+
+.dojoDndAvatar td {
+	padding: 0;
+}
+
+.dojoDndAvatarHeader {
+	display: none;
+}
+
+.dojoDndAvatarItem {
+	list-style-type: none;
+	background-color: #fff;
+	height: 24px;
+	line-height: 24px;
+	padding: 4px 2px;
+	vertical-align: bottom;
+	border: solid 2px #012245;
+}

@@ -1,0 +1,70 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAUxHUd_kiWDvTIRhdKrII4BTne7R4eXbI6stxMshCu0vmgBKNthSD2Phnoyi3tA1qPdtTACKyiAMcwg" type="text/javascript">
+	</script>
+	<t:if test="${surveyExpired}">
+		<script type="text/javascript">
+			function showError() {
+				var message = new MessageBox("${message:survey-expired}", "error");
+				message.show();
+			}
+			dojo.addOnLoad(showError);
+		</script>
+		<t:parameter name="else">
+			<t:if test="${form.submitted}">
+			<script type="text/javascript">
+			function showError() {
+				var message = new MessageBox("${message:survey-already-submitted}", "error");
+				message.show();
+			}
+			dojo.addOnLoad(showError);
+			</script>
+			<t:parameter name="else">
+				<script type="text/javascript">
+					// localized messages
+					MAP_LOAD_ERROR = "${message:map-load-error}";
+					MARKER_MESSAGE1 = "${message:marker-message1}";
+					MARKER_MESSAGE2 = "${message:marker-message2}";
+					MARKER_MESSAGE3 = "${message:marker-message3}";
+
+					surveyID = ${survey.id};
+					renderMarker = true;
+					dojo.addOnLoad(initMap);
+				</script>
+				<h1>${survey.name}</h1>
+
+				<p>${survey.description}</p>
+
+				<form name="survey_${survey.id}" id="survey_${survey.id}" action="../submit/${hashCode}" method="post">
+				<t:loop source="questions" value="question">
+					<fieldset class="question">
+						<p>${question.content}</p>
+						<p>
+						<t:if test="${openQuestion}">
+							<input type="text" name="${question.id}" />
+				
+							<t:parameter name="else">
+								<t:loop source="answers" value="answer">
+									<input type="${question.kind.toString().toLowerCase()}" name="${question.id}" value="${answer.id}" id="answer_${answer.id}"/>
+									<label for="answer_${answer.id}">${answerLiteralValue}</label>
+								</t:loop>
+							</t:parameter>
+						</t:if>
+						</p>
+					</fieldset>
+				</t:loop>
+				<input type="hidden" name="xCoordinate" />
+				<input type="hidden" name="yCoordinate" />
+				<div id="map_canvas">
+				</div>
+				<div id="submit_button_wrapper">
+					<input type="submit" value="${message:submit-survey}" />
+				</div>
+				</form>
+			</t:parameter>
+		</t:if>
+		</t:parameter>
+	</t:if>
+
+	
+
+</t:Layout>

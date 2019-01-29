@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<parent>
+		<groupId>pl.edu.agh.iosr</groupId>
+		<artifactId>surveylance</artifactId>
+		<version>2.0-SNAPSHOT</version>
+	</parent>
+	
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>surveylance-web</artifactId>
+	<name>Surveylance Web</name>
+	<description>Surveylance web application.</description>
+	<packaging>war</packaging>
+	<version>2.0-SNAPSHOT</version>
+
+	<dependencies>
+		<dependency>
+			<groupId>pl.edu.agh.iosr</groupId>
+			<artifactId>surveylance-model</artifactId>
+			<version>2.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>pl.edu.agh.iosr</groupId>
+			<artifactId>surveylance-service</artifactId>
+			<version>2.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.4</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<finalName>surveylance</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>maven-buildnumber-plugin</artifactId>
+				<version>0.9.6</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>true</doCheck>
+					<doUpdate>true</doUpdate>
+					<format>{0,number}.{1,number}.{2,number} {0,date,yyyy-MM-dd HH:mm:ss}</format>
+					<items>
+						<item>buildNumber0</item>
+						<item>buildNumber1</item>
+						<item>buildNumber2</item>
+						<item>timestamp</item>
+					</items>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<webResources>
+						<webResource>
+							<filtering>true</filtering>
+							<directory>${basedir}/src/main/webapp</directory>
+							<includes>
+								<include>version.js</include>
+							</includes>
+						</webResource>
+					</webResources>
+				</configuration>
+			</plugin> 
+		</plugins>
+	</build>
+	
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tapestry</groupId>
+				<artifactId>tapestry-component-report</artifactId>
+				<version>${tapestry-release-version}</version>
+				<configuration>
+					<rootPackage>pl.edu.agh.iosr.surveylance</rootPackage>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+	
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tapestry-snapshots</id>
+			<url>http://tapestry.formos.com/maven-snapshot-repository/</url>
+		</pluginRepository>
+		<!-- for maven-buildnumber-plugin -->
+		<pluginRepository>
+			<id>tlc</id>
+			<name>TLC Repository</name>
+			<url>http://commons.ucalgary.ca/pub/m2</url>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

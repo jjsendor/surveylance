@@ -1,0 +1,5 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<h1>Przygotowano dane testowe</h1>
+	<h2>Pytanie numeryczne ${numericQuestionId}</h2>
+	<h2>Pytanie textowe ${textQuestionId}</h2>
+</t:Layout>

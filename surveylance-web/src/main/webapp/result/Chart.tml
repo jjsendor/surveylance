@@ -1,0 +1,89 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+<script type="text/javascript">
+  dojo.require("dojox.charting.Chart2D");
+
+  var chart1;
+  
+  dojo.addOnLoad(function(){
+      chart1 = new dojox.charting.Chart2D("pie");
+      chart1.addPlot("default", {
+        type: "Pie",
+        fontColor: "white",
+        labelOffset: 40,
+        radius: 150
+      });
+      chart1.addSeries("Series 1", ${pieData});
+      dojo.require("dojox.charting.themes.PlotKit.blue");
+      chart1.setTheme(dojox.charting.themes.PlotKit.blue);
+      chart1.render();
+
+  }); 
+    
+</script>
+
+<h1>${message:questionText}</h1>
+
+<h2>${question}</h2>
+
+<div class="questionResultTable">
+<t:if test="${statistics}">
+	
+	
+	<h3>${message:most-popular}</h3>
+	<table>			
+	<thead>
+		
+	</thead>
+	
+	<tbody>
+		<t:loop source="mostPopular" value="answer">
+			<tr><td>${answer}</td></tr>
+		</t:loop>
+	</tbody>
+	</table>
+
+
+	<h3>${message:least-popular}</h3>
+	<table>			
+	<thead>
+		
+	</thead>
+	
+	<tbody>
+		<t:loop source="leastPopular" value="answer">
+			<tr><td>${answer}</td></tr>
+		</t:loop>
+	</tbody>
+	</table>
+	
+	
+	<t:if test="numeric">
+
+		<h3>${message:statistics}</h3>
+		<table>			
+		<thead>
+			
+		</thead>
+		
+		<tbody>
+			 
+			<tr><td>${message:min-answer}</td><td>${min}</td></tr>														
+			<tr><td>${message:max-answer}</td><td>${max}</td></tr>
+			<tr><td>${message:answers-average}</td><td>${average}</td></tr>
+			<tr><td>${message:answers-weighted-average}</td><td>${weightedAverage}</td></tr>
+			<tr><td>${message:answers-median}</td><td>${median}</td></tr>
+		
+		</tbody>
+		</table>
+		
+	</t:if>
+
+</t:if>
+
+<t:if test="${pie}">
+	<h3>${message:piechart}</h3>
+	<div id="pie" style="width: 100%; height: 350px;"></div>
+</t:if>
+</div>
+
+</t:Layout>

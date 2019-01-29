@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<head>
+		<script type="text/javascript">
+			var IMAGES_PATH = "${imagesPath}";
+		</script>
+		<title>${message:title}</title>
+	</head>
+	<body>
+		<t:if test="userInfo">
+		<script type="text/javascript">
+			var CONTEXT = "${relativeContext}";
+			var MANIFEST_FILE = "${gearsManifestPath}";
+			dojo.require("dojox.off._common");
+			dojo.require("dojox.off.files");
+			dojo.require("dojox.off.ui");
+			dojo.require("dojox.off.sync");
+
+			dojox.off.ui.appName = "surveylance";
+			dojox.off.ui.rollerImagePath = IMAGES_PATH + "/roller.gif";
+			dojox.off.files.versionURL = "${versionJSPath}";
+
+			dojo.connect(dojox.off.ui, "onLoad", this, function() {
+				dojo.connect(dojox.off.sync, "onSync", this,
+					function(type) {
+						if (type == "download")
+							sync.survey.download();
+					}
+				);
+			});
+
+			dojo.connect(dojox.off, "onNetwork", function(status) {
+				if (status == "online")
+					gears.goOnline();
+				else if (status == "offline")
+					gears.goOffline();
+			});
+
+			dojo.addOnLoad(gears.initializeResourceStore);
+			dojox.off.initialize();
+			dojo.connect(dojox.off.ui, "onLoad", this, function() {
+				gears.createDbTables();
+
+				if (dojox.off.isOnline)
+					gears.serveFromServer();
+				else
+					gears.serveFromLocalStore();
+			});
+		</script>
+		</t:if>
+		
+		<div id="content-wrapper">
+			<div id="header-wrapper">
+				<div id="header-left"></div>
+				<div id="header">
+					<t:pagelink page="index" id="logo_link"><div id="logo"><span>${message:surveylance}</span></div></t:pagelink>
+					
+					<t:if test="userInfo">
+						<span id="login_info">${message:logged-as} <strong>${userInfo.getUser().getGoogleId()}</strong> (<t:pagelink page="user/logout">${message:logout}</t:pagelink>)</span>
+						<t:parameter name="else">
+							<span id="login_info"><t:pagelink page="user/auth">${message:login}</t:pagelink></span>
+						</t:parameter>
+					</t:if>
+					
+					<div id="dot-widget-container" style="visibility: hidden;">
+						<!-- <div id="dot-widget-title-bar"> -->
+							<span id="dot-widget-network-indicator">
+								<img id="dot-widget-network-indicator-online" />
+								<img id="dot-widget-network-indicator-offline" />
+							</span>
+							<!-- <span id="dot-widget-title-text"></span>
+						</div> -->
+						
+						<div id="dot-widget-contents">
+							<!-- <div id="dot-widget-browser-restart">
+								Please restart your browser to 
+								use <span id="dot-widget-browser-restart-app-name"></span> Offline
+							</div> -->
+							
+							<div id="dot-sync-status">
+								<img id="dot-roller" />
+								<img id="dot-success-checkmark" />
+								<span id="dot-sync-messages"></span>
+								<span id="dot-sync-details">
+									(<a id="dot-sync-details-button" href="#">details</a>)
+								</span>
+								<span id="dot-sync-cancel">
+									(<a id="dot-sync-cancel-button" href="#">cancel</a>)
+								</span>
+							</div>
+							
+							<!-- <div id="dot-widget-learn-how">
+								<a id="dot-widget-learn-how-link" target="_blank" href="#">Learn How</a> 
+								to use <span id="dot-widget-learn-how-app-name"></span>&nbsp;Offline!
+							</div> -->
+						</div>
+					</div>
+				</div>
+				<div id="header-right"></div>
+			</div>
+			<div class="breadcrumb">
+				<span class="left"></span>
+				<ul>
+					<li><t:pagelink page="index"><span>${message:main-page}</span></t:pagelink></li>
+					<li><t:pagelink page="survey/list"><span>${message:surveys}</span></t:pagelink></li>
+					<li><t:pagelink page="result/SurveyList"><span>${message:analysis}</span></t:pagelink></li>
+					<li><t:pagelink page="contact/list"><span>${message:contacts}</span></t:pagelink></li>
+					<li><t:pagelink page="calendar/list"><span>${message:calendar}</span></t:pagelink></li>
+				</ul>
+				<span class="right"></span>
+			</div>
+			
+			<div id="message_box" style="display: none;">
+			</div>
+			
+			<div id="content">
+				<t:body/>
+			</div>
+			
+			<div id="footer-wrapper">
+				<div id="footer-left"></div>
+				<div id="footer">
+					<span></span>
+					<br />
+					<br />
+					<br />
+					<br />
+				</div>
+				<div id="footer-right"></div>
+			</div>
+		</div>
+	</body>
+</html>

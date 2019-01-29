@@ -1,0 +1,48 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAUxHUd_kiWDvTIRhdKrII4BSJhoLD8dcuJWWGnBsMwtXYm0bS4hRjQCORJhwGeGNRYHFlUrN6Eb5eZQ" type="text/javascript">
+	</script>
+	<script type="text/javascript">
+		// localized messages
+		MAP_LOAD_ERROR = "${message:map-load-error}";
+		MARKER_MESSAGE4 = "${message:marker-message4}";
+		var markers;
+
+		function createMarker(latlng, number) {
+			var icon = new GIcon(G_DEFAULT_ICON);
+			icon.image = "http://www.google.com/intl/en_us/mapfiles/ms/micons/blue.png";
+			var marker = new GMarker(latlng, {draggable: false, icon: icon});
+			marker.value = number;
+			GEvent.addListener(marker, "click", function() {
+				map.openInfoWindowHtml(latlng, "<b>" + MARKER_MESSAGE4 + "</b>");
+				document.getElementById("map_result").formInput.value = number;
+			});
+			return marker;
+		}
+
+		var displayMarkers = function() {
+			<t:loop source="forms" value="form">
+				lat = ${form.x};
+				lng = ${form.y};
+
+				var pos = new GLatLng(lat, lng);
+				var marker = createMarker(pos, ${form.id});
+				map.addOverlay(marker);
+				document.getElementById("map_result").formInput.value = ${form.id};
+				map.openInfoWindowHtml(marker.getLatLng(), "<b>" + MARKER_MESSAGE4 + "</b>");
+			</t:loop>
+		};
+
+		renderMarker = false;
+		dojo.addOnLoad(initMap);
+		dojo.addOnLoad(displayMarkers);
+	</script>
+	<form name="map_result" id="map_result" action="../singlesurvey/${survey.id}" method="post">
+		${message:map-message}
+		<input type="hidden" name="formInput" />
+		<div id="submit_button_wrapper">
+			<input type="submit" value="${message:show-single-result}" />
+		</div>
+	</form>
+	<div id="map_canvas">
+	</div>
+</t:Layout>

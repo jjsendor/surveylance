@@ -1,0 +1,60 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${survey.name}</h1>
+
+	<ul class="buttons_list">
+		<t:if test="${editable}">
+		<li>
+			<t:pagelink page="survey/edit" context="survey.id" class="button_link">
+				<span>
+					<img src="../../images/buttons/edit.png" />
+					${message:edit}
+				</span>
+			</t:pagelink>
+		</li>
+		<li>
+			<t:actionlink t:id="delete" context="survey.id" class="button_link">
+				<span>
+					<img src="../../images/buttons/delete.png" alt="-" />
+					${message:remove}
+				</span>
+			</t:actionlink>
+		</li>
+		</t:if>
+		<li>
+			<t:pagelink page="survey/send" context="survey.id" class="button_link">
+				<span>
+					<img src="../../images/buttons/mail_send.png" />
+					${message:send}
+				</span>
+			</t:pagelink>
+		</li>
+	</ul>
+	
+	<h2>${message:survey-description}</h2>
+	<p>${survey.description}</p>
+	
+	<h2>${message:expiration-date}</h2>
+	<p>${surveyExpirationDate}</p>
+	
+	<h2>${message:survey-preview}</h2>
+	
+	<t:loop source="questions" value="question">
+		<fieldset class="question">
+			<p>${question.content}</p>
+			<p>
+			<t:if test="${openQuestion}">
+				<input type="text" name="${question.id}" />
+	
+				<t:parameter name="else">
+					<t:loop source="answers" value="answer">
+						<input type="${question.kind.toString().toLowerCase()}" name="${question.id}" value="${answer.id}" id="answer_${answer.id}"/>
+						<label for="answer_${answer.id}">${answerLiteralValue}</label>
+					</t:loop>
+				</t:parameter>
+			</t:if>
+			</p>
+		</fieldset>
+	</t:loop>
+
+</t:Layout>

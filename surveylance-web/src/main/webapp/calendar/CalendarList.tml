@@ -1,0 +1,17 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:calendar}</h1>
+	<h4>${message:name}</h4>
+
+	<t:grid t:source="events"
+		row="event">
+		<t:parameter name="nameCell">
+		
+		<b>
+			<t:pagelink page="survey/view" context="event.id">${event.name}</t:pagelink>
+		</b>
+
+		</t:parameter>
+	</t:grid>
+
+</t:Layout>

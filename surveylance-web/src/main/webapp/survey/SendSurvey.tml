@@ -1,0 +1,45 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:choose-contacts}</h1>
+
+
+	<t:if t:test="mailAdded">
+		<div>
+			<h4>${message:currently-added-contacts}</h4>
+			
+			<t:loop source="addedMails" value="mail" xml:space="preserve">
+				<t:actionlink t:context="mail" t:id="delete">${mail}</t:actionlink>
+			</t:loop>
+		</div>
+		
+		
+		<t:parameter name="else">    
+			<h4>${message:currently-there-are-no-added-contacts}</h4>
+		</t:parameter> 
+	</t:if>
+	
+	
+	<hr/>
+			
+	<br/>
+
+	<t:grid t:source="contacts" 
+		row="contact" 
+		add="addToSurvey"
+		exclude="groupsExist"
+		rowsPerPage="20"
+		pagerPosition="top">
+		
+		<t:parameter name="addToSurveyCell">
+			<t:actionlink t:context="contact.mail" t:id="add">${message:add}</t:actionlink>
+		</t:parameter>
+		
+
+	</t:grid>
+
+	<div class="button_toolbar">
+		<t:actionlink t:id="send"><span>${message:send}</span></t:actionlink>
+	</div>
+
+
+</t:Layout>

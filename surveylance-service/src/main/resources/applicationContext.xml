@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="formManager" class="pl.edu.agh.iosr.surveylance.service.impl.FormManagerImpl">
+		<property name="formDAO">
+			<ref bean="formDAO" />
+		</property>
+	</bean>
+	<bean id="modificationService" class="pl.edu.agh.iosr.surveylance.service.impl.ModificationServiceImpl">
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="forkManager" class="pl.edu.agh.iosr.surveylance.service.impl.ForkManagerImpl">
+		<property name="forkComponentDAO">
+			<ref bean="forkComponentDAO" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="decisionDAO">
+			<ref bean="decisionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="syncService" class="pl.edu.agh.iosr.surveylance.service.impl.SyncServiceImpl">
+		<property name="restorationService">
+			<ref bean="surveyRestorationService" />
+		</property>
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="surveyRestorationService" class="pl.edu.agh.iosr.surveylance.service.impl.SurveyRestorationServiceImpl">
+		<property name="componentManager">
+			<ref bean="componentManager" />
+		</property>
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="componentManager" class="pl.edu.agh.iosr.surveylance.service.impl.ComponentManagerImpl">
+		<property name="modificationService">
+			<ref bean="modificationService" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="questionManager" class="pl.edu.agh.iosr.surveylance.service.impl.QuestionManagerImpl">
+		<property name="modificationService">
+			<ref bean="modificationService" />
+		</property>
+		<property name="componentManager">
+			<ref bean="componentManager" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+	</bean>
+	<bean id="surveyResultManager" class="pl.edu.agh.iosr.surveylance.service.impl.SurveyResultManagerImpl">
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="surveyResultDAO">
+			<ref bean="surveyResultDAO" />
+		</property>
+		<property name="questionDAO">
+			<ref bean="questionDAO" />
+		</property>
+		<property name="answerDAO">
+			<ref bean="answerDAO" />
+		</property>
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
+		<property name="userDAO">
+			<ref bean="userDAO" />
+		</property>
+	</bean>
+	<bean id="surveyManager" class="pl.edu.agh.iosr.surveylance.service.impl.SurveyManagerImpl">
+		<property name="modificationService">
+			<ref bean="modificationService" />
+		</property>
+		<property name="componentManager">
+			<ref bean="componentManager" />
+		</property>
+		<property name="surveyDAO">
+			<ref bean="surveyDAO" />
+		</property>
+		<property name="componentDAO">
+			<ref bean="componentDAO" />
+		</property>
+		<property name="userDAO">
+			<ref bean="userDAO" />
+		</property>
+		<property name="formDAO">
+			<ref bean="formDAO" />
+		</property>
+	</bean>
+	<bean id="userManager" class="pl.edu.agh.iosr.surveylance.service.impl.UserManagerImpl">
+		<property name="userDAO">
+			<ref bean="userDAO" />
+		</property>
+	</bean>
+	<bean id="calendarManager" class="pl.edu.agh.iosr.surveylance.service.impl.CalendarManagerImpl">
+	</bean>
+	<bean id="contactManager" class="pl.edu.agh.iosr.surveylance.service.impl.ContactManagerImpl">
+	</bean>
+
+</beans>

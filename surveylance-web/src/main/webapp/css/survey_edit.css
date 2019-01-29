@@ -1,0 +1,227 @@
+div#content {
+	width: 964px;
+}
+
+#edit-content {
+	position: relative;
+	width: 720px;
+	float: right;
+	padding: 0;
+}
+
+legend {
+	text-align: right;
+	margin: 6px;
+	padding: 0 8px;
+}
+
+#nav {
+	padding: 1px;
+	float: left;
+}
+
+/* MENU */
+/* Generated via www.cssmenubuilder.com */
+
+.menu { margin:0; padding:0; width:232px; list-style:none;background:rgb(255,255,255); }
+.menu li.menu-item h3  { padding:0; margin:0 0 1px 0; height:40px; display:block; }
+.menu li.menu-item h3 a { text-align:left;height:40px; padding:0px 25px; font:16px Verdana, Arial, Helvetica, sans-serif; color:rgb(195,215,248); display:block; background:url('../images/verMenuImages.png') 0px 0px no-repeat; text-decoration:none; }
+.menu li.menu-item h3 a:hover { background:url('../images/verMenuImages.png') 0px -40px no-repeat; color:rgb(195,215,248); }
+.menu li.menu-item h3 a.active, .menu li a.active:hover { background:url('../images/verMenuImages.png') 0px -80px no-repeat; color:rgb(195,215,248); }
+.menu li.menu-item h3 a span { line-height:40px; }
+
+.menu-item ul li {
+	list-style-type: none;
+	font-size: 11px;
+	margin: 1px;
+	border: dotted 1px black;
+}
+
+.menu-item ul li a {
+	display: block;
+	padding: 2px 3px;
+	font-size: 13px;
+	text-decoration: none;
+	min-height: 38px;
+	line-height: 38px;
+	vertical-align: middle;
+}
+
+.menu-item ul li a:link,
+.menu-item ul li a:visited,
+.menu-item ul li a:active {
+	color: #8C7ACC;
+}
+
+.menu-item ul li a:hover {
+	color: #8C7ACC;
+	background-color: #CDD7B6;
+}
+
+.menu-item ul li a img {
+	float: left;
+	margin: 3px;
+}
+
+
+#question-list {
+	list-style-type: none;
+}
+
+/*
+ * Questions list (http://www.colourlovers.com/palette/21604/Dark_Sky)
+ */
+li.question div.dijitTitlePane {
+	background-color: #B4A9DB;
+	border: solid 1px #8C7ACC;
+	color: #000;
+}
+
+li.question div.dijitTitlePane div.dijitTitlePaneTitle  {
+	position: relative;
+	padding: 2px;
+	background-color: #4B3699;
+	color: #B4A9DB;
+	font-family: Georgia, Helvetica, sans-serif;
+	font-weight: bold;
+	border-bottom: solid 1px #8C7ACC;
+	text-align: center;
+}
+
+li.question div.dijitTitlePane div.dijitTitlePaneTitle a.remove {
+	top: 2px;
+	left: 2px;
+}
+
+li.question div.dijitTitlePane div.dijitTitlePaneContentOuter {
+	margin: 4px 3px;
+	font-family: Georgia, Helvetica, sans-serif;
+}
+/*
+li.question[class~="active"] {
+	background-color: #B4A9DB;
+	border-color: #8C7ACC;
+	color: #000;
+}
+
+li.question[class~="active"] .dijitTitlePane .dijitTitlePaneTitle {
+	background-color: #4B3699;
+	border-bottom-color: #8C7ACC;
+	color: #B4A9DB;
+}
+*/
+li.question[class~="inactive"] {
+	background-color: #CDD7B6;
+	border-color: #9EAA89;
+	color: #474746;
+}
+
+li.question[class~="inactive"] .dijitTitlePane .dijitTitlePaneTitle {
+	background-color: #727368;
+	border-bottom-color: #9EAA89;
+	color: #CDD7B6;
+}
+
+/* -----------------------------------------------------------------------------
+ * Dojo dnd - survey edit
+ * -----------------------------------------------------------------------------
+ */
+
+.dojoDndContainer * li,
+.dojoDndContainerOver * li {
+	list-style-type: none;
+} 
+
+.dojoDndAvatar {
+	border: dashed 2px #8C7ACC;
+	background: #B4A9DB;
+	color: #4B3699;
+}
+
+.dojoDndAvatarHeader {
+	display: none;
+}
+
+.dojoDndAvatar * li {
+	list-style-type: none;
+}
+
+.dojoDndAvatar * a {
+	text-decoration: none;
+	line-height: 36px;
+	vertical-align: middle;
+}
+
+.dojoDndAvatar * a img {
+	float: left;
+	margin-right: 4px;
+}
+/*
+.dojoDndItemBefore {
+	margin-top: 10px;
+}
+*/
+.dojoDndItemAfter {
+	margin-bottom: 25px;
+}
+
+/* TitlePane */
+.dijitOpen span.dijitArrowNodeInner,
+.dijitClosed span.dijitArrowNodeInner {
+	display: block;
+	float: right;
+	width: 16px;
+	height: 16px;
+	margin-top: -16px;
+	text-indent: -10000px;
+}
+.dijitOpen span.dijitArrowNodeInner {
+	background: url('../images/16x16/1downarrow1.png') no-repeat;
+}
+
+.dijitClosed span.dijitArrowNodeInner {
+	background: url('../images/16x16/1leftarrow.png') no-repeat;
+}
+
+.dijitTitlePaneContentInner div p {
+	margin: 10px 4px;
+}
+
+/*
+ * Answers list
+ */
+.answers_list li {
+	list-style-type: none;
+	margin: 12px 3px 4px;
+}
+
+.answers_list li input {
+	margin-right: 3px;
+}
+
+.answers_list li span input.dijitTextBox {
+	width: 80%;
+}
+
+button.addAnswer {
+	margin-top: 10px;
+}
+
+button.addAnswer span,
+button.addAnswer img,
+button.removeAnswer span,
+button.removeAnswer img {
+	line-height: 16px;
+	vertical-align: middle;
+}
+
+button.addAnswer img,
+button.removeAnswer img {
+	margin-right: 4px;
+}
+
+button.removeAnswer {
+	float: right;
+	clear: right;
+	margin-top: -20px;	
+}

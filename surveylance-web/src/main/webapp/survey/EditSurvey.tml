@@ -1,0 +1,257 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<script type="text/javascript">
+		// localized messages (from survey_edit.js)
+		AJAX_ERROR = "${message:ajax-error}";
+		COMPONENT_DELETE_CONFIRM = "${message:component-delete-confirm}";
+		ORDER_COMPONENT_GO_UP = "${message:order-component-go-up}";
+		ANSWER_EDIT_PROMPT = "${message:answer-edit-prompt}";
+		ANSWER_ADD = "${message:answer-add}";
+		ANSWER_DELETE = "${message:answer-delete}";
+		DND_PROMPT = "${message:dnd-prompt}";
+		ORDER_COMPONENT_PROMPT = "${message:order-component-prompt}";
+		QUESTION_NEW = "${message:question-new}";
+		QUESTION_EDIT_PROMPT = "${message:question-edit-prompt}";
+		// localized messages (from synchronization.js)
+		SYNCHRONIZATION_COMPLETED = "${message:synchronization-completed}";
+		SYNCHRONIZATION_ERROR = "${message:synchronization-error}";
+
+		var toolboxMenu;
+		var components = new Array();
+
+		var init = function() {
+			rootComponent = new Component(
+				${rootComponent.id},
+				${rootComponent.modifications},
+				null,
+				null,
+				${rootComponent.id});
+
+			if (gears.available()) {
+				rootComponent.gearsId = gears.Component.filter(
+						"persistentId = ?", ${rootComponent.id}).first().rowid;
+				if (gears.isServedFromLocalStore())
+					components[rootComponent.gearsId] = rootComponent;
+			}
+
+			if (!gears.available() || !gears.isServedFromLocalStore())
+				components[rootComponent.persistentId] = rootComponent;
+
+			var surveyModifications = "${survey.modifications}";
+
+			if (surveyModifications == "")
+				surveyModifications = null;
+			else
+				surveyModifications = parseInt(surveyModifications);
+
+			survey = new Survey(
+					"${survey.name}",
+					surveyModifications,
+					"${survey.description}",
+					"${survey.expirationDate}",
+					rootComponent,
+					${survey.id});
+
+			toolboxMenu = new Bandoneon();
+
+			toolboxMenu.addPane("toolbox_questions_numeric_link", "toolbox_questions_numeric");
+			toolboxMenu.addPane("toolbox_questions_text_link", "toolbox_questions_text");
+			toolboxMenu.addPane("toolbox_components_link", "toolbox_components");
+			/*
+			toolboxMenu.addPane("toolbox_user_link", "toolbox_user");
+			toolboxMenu.addPane("toolbox_rest_link", "toolbox_rest");
+
+			toolboxMenu.addPane("toolbox_synchronization_link", "toolbox_synchronization");
+			*/
+		};
+
+		var createOnlineComponents = function() {
+			var parent;
+			<t:loop source="components" value="component">
+				<t:if test="${component.parentComponent}">
+					parent = components[${component.parentComponent.id}];
+					<t:if test="question">
+						console.debug("Creating component with id ${component.id} for question with id ${question.id}, parent id: ${component.parentComponent.id}");
+						type = ["question", "${question.type.toString().toLowerCase()}", "${question.kind.toString().toLowerCase()}"];
+
+						parent.dndSource.insertNodes(false, [
+							{
+								id: ${component.id},
+								type: type,
+								content: "${question.content}"
+							}
+						]);
+
+						question = addComponent(type, parent.dndSource);
+						question.persistentId = ${question.id};
+						question.parent.persistentId = ${component.id};
+
+						if (gears.available()) {
+							question.gearsId = gears.question.findByPersistentId(
+									question.persistentId).rowid;
+							question.parent.gearsId =
+								gears.component.findByPersistentId(
+										question.parent.persistentId).rowid;
+						}
+
+						var answerModifications;
+						var answerPosition;
+						<t:loop source="answers" value="answer">
+							answerModifications = "${answer.modifications}";
+
+							if (answerModifications == "")
+								answerModifications = null;
+							else
+								answerModifications = parseInt(answerModifications);
+
+							answerModifications = "${answer.modifications}";
+
+							if (answerPosition == "${answer.position}")
+								answerPosition = null;
+							else
+								answerPosition = parseInt(answerPosition);
+
+							addAnswer(question, new Answer(
+								answerModifications,
+								answerPosition,
+								<t:if test="${questionNumeric}">
+									"${numericAnswer.value}"
+									<t:parameter name="else">
+									"${textAnswer.value}"
+									</t:parameter>
+								</t:if>
+								,
+								${answer.id}
+							));
+						</t:loop>
+
+						<t:parameter name="else">
+							console.debug("Creating component with id ${component.id}, parent id: ${component.parentComponent.id}");
+							type = ["component", "order"];
+							parent.dndSource.insertNodes(false, [
+								{
+									id: ${component.id},
+									type: type,
+									position: ${component.position}
+								}
+							]);
+
+							component = addComponent(type, parent.dndSource);
+							component.persistentId = ${component.id};
+
+							if (gears.available()) {
+								component.gearsId =
+									gears.component.findByPersistentId(
+											component.persistentId).rowid;
+							}
+
+							components[${component.id}] = component;
+						</t:parameter>
+					</t:if>
+				</t:if>
+			</t:loop>
+		};
+
+		var createOfflineComponents = function() {
+			console.debug("Restoring components from local store");
+			console.debug("rootComponent.persistentId = "
+					+ rootComponent.persistentId);
+
+			var gears_rootComponent = gears.component.findByPersistentId(
+					rootComponent.persistentId);
+
+			console.debug("Gears: rootComponent = " + gears_rootComponent);
+
+			if (gears_rootComponent)
+				gears_restoreComponent(gears_rootComponent);
+			else
+				console.debug("Cannot restore rootComponent");
+		};
+
+		var createComponents = function() {
+			if (!gears.available() || !gears.isServedFromLocalStore())
+				createOnlineComponents();
+			else
+				createOfflineComponents();
+		};
+
+		dojo.addOnLoad(init);
+		dojo.addOnLoad(initDnd);		// survey_edit.js
+		dojo.addOnLoad(createComponents);
+	</script>
+	<div id="nav">
+		<ul class="menu">
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_questions_numeric_link"><span>${message:numeric-questions}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_questions_numeric">
+					<!-- <li class="component"><a href="#"><img src="../../images/32x32/radio.png" />${message:single-time-choice-question}</a></li>
+					<li class="component"><a href="#"><img src="../../images/32x32/checkbox.png" />${message:multi-time-choice-question}</a></li>
+					<li class="component"><a href="#"><img src="../../images/32x32/editclear.png" />${message:open-question}</a></li> -->
+				</ul>
+			</li>
+			
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_questions_text_link"><span>${message:text-questions}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_questions_text">
+				</ul>
+			</li>
+			
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_components_link"><span>${message:components}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_components">
+				</ul>
+			</li>
+			<!--
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_user_link"><span>${message:your-components}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_user" style="display: none;">
+					<li class="component"><a href="#">${message:user-component} 1.</a></li>
+					<li class="component"><a href="#">${message:user-component} 2.</a></li>
+					<li class="component"><a href="#">${message:user-component} 3.</a></li>
+				</ul>
+			</li>
+			-->
+			<!--
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_rest_link"><span>${message:others}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_rest" style="display: none;">
+					<li class="component"><a href="#">${message:other-component} 1.</a></li>
+					<li class="component"><a href="#">${message:other-component} 2.</a></li>
+					<li class="component"><a href="#">${message:other-component} 3.</a></li>
+				</ul>
+			</li>
+			-->
+			<!--
+			<li class="menu-item">
+				<h3><a href="#" id="toolbox_synchronization_link"><span>${message:synchronize}</span></a></h3>
+				
+				<ul class="toolbox" id="toolbox_synchronization">
+					<li class="component"><a href="#" onclick="dojox.off.sync.synchronize();">${message:synchronize-gears}</a></li>
+					<li class="component"><a href="#" onclick="synchronizeSurvey();">${message:synchronize-server}</a></li>
+				</ul>
+			</li>
+			-->
+		</ul>
+
+		<div id="dot-widget"></div>
+	</div>
+
+	<div id="edit-content">
+		<fieldset id="components">
+			<legend>${survey.name}</legend>
+			
+			<div id="component_${rootComponent.id}" class="empty">
+				<span class="dnd_info">${message:dnd-prompt}</span>
+				<ol id="components_list_${rootComponent.id}" />
+			</div>
+		</fieldset>
+		
+		<span id="offline_info">${message:offline-mode}</span>
+	</div>
+
+</t:Layout>

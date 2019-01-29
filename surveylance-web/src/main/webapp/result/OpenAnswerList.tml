@@ -1,0 +1,31 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+<h1>${message:given-answers}</h1>
+
+	<div class="questionResultTable">
+		<h3><t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${question.content}</t:pagelink></h3>
+		<table>			
+		<thead>
+			<tr>
+				<th class="res">${message:result}</th>
+				<th class="res">${message:responce-percent}</th>
+				<th class="cnt">${message:responce-count}</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		
+			
+			<t:loop source="results" value="result">
+					<tr>
+						<td>${result.first}</td>
+						<td>${quantityWithFrequencySecond}</td>
+						<td>${quantityWithFrequency.first}</td>
+					</tr>								
+			</t:loop>								
+		
+		</tbody>
+		</table>
+	</div>
+
+</t:Layout>

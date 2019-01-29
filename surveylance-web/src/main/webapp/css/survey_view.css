@@ -1,0 +1,6 @@
+.buttons_list li {
+	float: right;
+	list-style-type: none;
+	clear: none;
+	margin: 0 5px;
+}

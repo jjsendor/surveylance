@@ -1,0 +1,339 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+<t:if test="${normalQuestionsToAnalyse}">
+	<t:if test="${equalQuestionsToAnalyse}">
+		<h1>${message:different-questions}</h1>
+	<t:parameter name="else">
+		<h1>${message:questions-to-analyze}</h1>
+	</t:parameter>
+	</t:if>	
+	<hr/>
+	
+<ul>
+	<t:loop source="questions" value="question">
+	
+		<li>
+		<div class="questionResultTable">
+		<t:if test="${openQuestion}">
+		
+			<h3><t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${question.content}
+			<t:if test="${equalQuestionsToAnalyse}">	
+				${message:survey}${survey.name}
+			</t:if>	
+			</t:pagelink></h3>
+			<table>			
+			<thead>
+				<tr>
+					<th class="res">Tresc</th>
+					<th class="cnt">Ilosc</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+				
+				<t:loop source="topResults" value="result">
+						<tr>
+							<td>${result.first}</td>
+							<td class="score">${quantityWithFrequency.first}</td>
+						</tr>								
+				</t:loop>
+				
+				<tr class="answered">
+					<td colspan="2">
+						<t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${message:see-all}...</t:pagelink>
+					</td>
+				</tr>								
+			
+			</tbody>
+			</table>
+		<t:parameter name="else">
+
+			<h3><t:pagelink page="result/Chart" context="question.id" class="question_link">${question.content}
+			<t:if test="${equalQuestionsToAnalyse}">	
+				${message:survey}${survey.name}
+			</t:if>				
+			</t:pagelink></h3>
+			
+			<table>
+			
+			<thead>
+				<tr>
+					<th colspan="2" class="left"></th>
+					<th class="res">${message:responce-percent}</th>
+					<th class="cnt">${message:responce-count}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<t:loop source="answers" value="answer">
+				
+				<tr>
+						<td class="quest">${answerLiteralValue}</td>
+						<td class="score"><div style="width : ${frequency}%;"></div></td>
+						<td>${frequency}</td>
+						<td>${quantity}</td>
+				</tr>
+				
+			</t:loop>
+			
+				<tr class="answered">
+					<td><t:pagelink page="result/Chart" context="question.id">${message:details}...</t:pagelink></td>
+					<td colspan="2" class="right">${message:all-answers-quantity}</td>
+					<td>${allAnswerQuantity}</td>
+				</tr>
+			
+			</tbody>
+			
+			</table>
+			
+		</t:parameter>
+		</t:if>
+		</div>
+		</li>
+		
+	</t:loop>
+</ul>	
+</t:if>
+
+<t:if test="${equalQuestionsToAnalyse}">
+	<hr/>
+
+	<h1>${message:related-questions-one}</h1>
+	
+	<hr/>
+	
+<ul>
+	<t:loop source="equalQuestionsList" value="question">
+	
+		<li>
+		<div class="questionResultTable">
+		<t:if test="${openQuestion}">
+		
+			<h3><t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${question.content}${message:survey}${survey.name}</t:pagelink></h3>
+			<table>			
+			<thead>
+				<tr>
+					<th class="res">Tresc</th>
+					<th class="cnt">Ilosc</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+				
+				<t:loop source="topResults" value="result">
+						<tr>
+							<td>${result.first}</td>
+							<td class="score">${quantityWithFrequency.first}</td>
+						</tr>								
+				</t:loop>
+				
+				<tr class="answered">
+					<td colspan="2">
+						<t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${message:see-all}...</t:pagelink>
+					</td>
+				</tr>								
+			
+			</tbody>
+			</table>		
+		<t:parameter name="else">
+
+			<h3><t:pagelink page="result/Chart" context="question.id" class="question_link">${question.content}${message:survey}${survey.name}</t:pagelink></h3>
+			
+			<table>
+			
+			<thead>
+				<tr>
+					<th colspan="2" class="left"></th>
+					<th class="res">${message:responce-percent}</th>
+					<th class="cnt">${message:responce-count}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<t:loop source="answers" value="answer">
+				
+				<tr>
+						<td class="quest">${answerLiteralValue}</td>
+						<td class="score"><div style="width : ${frequency}%;"></div></td>
+						<td>${frequency}</td>
+						<td>${quantity}</td>
+				</tr>
+				
+			</t:loop>
+			
+				<tr class="answered">
+					<td><t:pagelink page="result/Chart" context="question.id">${message:details}...</t:pagelink></td>
+					<td colspan="2" class="right">${message:all-answers-quantity}</td>
+					<td>${allAnswerQuantity}</td>
+				</tr>
+			
+			</tbody>
+			
+			</table>
+			
+		</t:parameter>
+		</t:if>
+		</div>
+		</li>
+			
+	</t:loop>
+</ul>	
+
+	<hr/>	
+	
+	<h1>${message:related-questions-together}</h1>
+	
+	<hr/>
+	
+<ul>  
+  <t:loop source="firstEqualQuestions" value="question">
+	<t:if test="${openQuestion}">
+	<t:parameter name="else">
+	<t:loop source="trendNumber" value="currentTrend">  
+		<li>
+		<div class="questionResultTable">		
+
+			<h3>${question.content}${message:trend-quantity}${survey.name} ${message:and} ${nextSurvey.name}</h3>
+			
+			<table>
+			
+			<thead>
+				<tr>
+					<th colspan="2" class="left"></th>
+					<th class="cnt">${message:change}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<t:loop source="answers" value="answer">
+				
+				<tr>
+						<td class="quest">${answerLiteralValue}</td>
+						<td class="score"><div style="margin-left : ${bargraphQuantitiesTrend.first}% ; width : ${bargraphQuantitiesTrend.second}%;"></div></td>
+						<td>${quantitiesTrend}</td>
+				</tr>
+				
+			</t:loop>			
+			
+			</tbody>
+			
+			</table>
+			
+			<h3>${question.content}${message:trend-frequency}${survey.name} ${message:and} ${nextSurvey.name}</h3>
+			
+			<table>
+			
+			<thead>
+				<tr>
+					<th colspan="2" class="left"></th>
+					<th class="cnt">${message:change}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<t:loop source="answers" value="answer">
+				
+				<tr>
+						<td class="quest">${answerLiteralValue}</td>
+						<td class="score"><div style="margin-left: ${bargraphFrequenciesTrend.first}% ; width : ${bargraphFrequenciesTrend.second}%;"></div></td>
+						<td>${formattedFrequenciesTrend}</td>
+				</tr>
+				
+			</t:loop>			
+			
+			</tbody>
+			
+			</table>			
+				
+		</div>
+		</li>
+		
+	</t:loop>
+	</t:parameter>
+	</t:if>		
+	
+		<li>
+		<div class="questionResultTable">
+		<t:if test="${openQuestion}">
+			<h3><t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${question.content}${message:sum}</t:pagelink></h3>
+			<table>			
+			<thead>
+				<tr>
+					<th class="res">Tresc</th>
+					<th class="cnt">Ilosc</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+				
+				<t:loop source="topResultsEqualQ" value="result">
+						<tr>
+							<td>${result.first}</td>
+							<td class="score">${quantityWithFrequency.first}</td>
+						</tr>								
+				</t:loop>
+				
+				<tr class="answered">
+					<td colspan="2">
+						<t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${message:see-all}...</t:pagelink>
+					</td>
+				</tr>								
+			
+			</tbody>
+			</table>		
+		<t:parameter name="else">
+
+			<h3><t:pagelink page="result/Chart" context="question.id" class="question_link">${question.content}${message:sum}</t:pagelink></h3>
+			
+			<table>
+			
+			<thead>
+				<tr>
+					<th colspan="2" class="left"></th>
+					<th class="res">${message:responce-percent}</th>
+					<th class="cnt">${message:responce-count}</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<t:loop source="answers" value="answer">
+				
+				<tr>
+						<td class="quest">${answerLiteralValue}</td>
+						<td class="score"><div style="width : ${frequenciesFromSum}%;"></div></td>
+						<td>${frequenciesFromSum}</td>
+						<td>${quantitiesSum}</td>
+				</tr>
+				
+			</t:loop>
+			
+				<tr class="answered">
+					<td><t:pagelink page="result/Chart" context="question.id">${message:details}...</t:pagelink></td>
+					<td colspan="2" class="right">${message:all-answers-quantity}</td>
+					<td>${allAnswerQuantityEqualQ}</td>
+				</tr>
+			
+			</tbody>
+			
+			</table>
+			
+		</t:parameter>
+		</t:if>
+		</div>
+		</li>
+		
+	<hr/>		
+	</t:loop>
+</ul>		
+	
+</t:if>
+
+</t:Layout>	

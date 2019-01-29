@@ -1,0 +1,194 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+<script type="text/javascript">
+  dojo.require("dojox.charting.Chart2D");
+  dojo.require("dojox.charting.widget.Legend");
+
+  var chart;
+  
+  dojo.addOnLoad(function(){
+	<t:loop source="firstQuestions" value="question">
+		<t:if test="${closedQuestion}">
+			
+				chart = new dojox.charting.Chart2D("qBars" + ${question.id});
+				chart.addAxis("x", {min: 0});
+				chart.addAxis("y", {vertical: true, labels: ${labels}});
+				chart.addPlot("default", {
+					hAxis: "x",
+					vAxis: "y",
+					type: "ClusteredBars",
+					areas: true,
+					gap: 10
+				});
+				<t:loop source="surveys" value="survey">
+					chart.addSeries("${survey.name}", ${quantitiesTrends});
+				</t:loop>
+				dojo.require("dojox.charting.themes.PlotKit.blue");
+				chart.setTheme(dojox.charting.themes.PlotKit["blue"]);
+				chart.render();
+				legend = new dojox.charting.widget.Legend({chart: chart, horizontal: false}, "qLegend" + ${question.id});
+				
+				
+				
+				chart = new dojox.charting.Chart2D("fBars" + ${question.id});
+				chart.addAxis("x", {min: 0});
+				chart.addAxis("y", {vertical: true, labels: ${labels}});
+				chart.addPlot("default", {
+					hAxis: "x",
+					vAxis: "y",
+					type: "ClusteredBars",
+					areas: true,
+					gap: 10
+				});
+				<t:loop source="surveys" value="survey">
+					chart.addSeries("${survey.name}", ${frequenciesTrends});
+				</t:loop>
+				dojo.require("dojox.charting.themes.PlotKit.blue");
+				chart.setTheme(dojox.charting.themes.PlotKit["blue"]);
+				chart.render();
+				legend = new dojox.charting.widget.Legend({chart: chart, horizontal: false}, "fLegend" + ${question.id});
+				
+				chart = new dojox.charting.Chart2D("sBars" + ${question.id});
+				chart.addAxis("x", {min: 0});
+				chart.addAxis("y", {vertical: true, labels: ${labels}});
+				chart.addPlot("default", {
+					hAxis: "x",
+					vAxis: "y",
+					type: "Bars",
+					areas: true,
+					gap: 10
+				});
+				chart.addSeries("sums", ${quantitiesSums});
+				dojo.require("dojox.charting.themes.PlotKit.blue");
+				chart.setTheme(dojox.charting.themes.PlotKit["blue"]);
+				chart.render();
+			
+		</t:if>
+      
+	</t:loop>
+	
+
+  }); 
+    
+</script>
+
+	<t:if test="${sum}">	
+		<t:if test="${quantity}">
+			<h1>${message:analysis-trend-sum}</h1>
+		<t:parameter name="else">
+			<h1>${message:analysis-sum}</h1>
+		</t:parameter>
+		</t:if>	
+	<t:parameter name="else">	
+		<h1>${message:analysis-trend}</h1>
+	</t:parameter>
+	</t:if>		
+	<hr/>
+	
+<ul>  
+    <t:loop source="firstQuestions" value="question">
+	  <t:if test="${closedQuestion}">	
+	    <t:if test="${quantity}">		 
+		<li>	
+			<div class="questionResultTable">		
+	
+				<h3>${question.content}: ${message:trend-quantity}</h3>
+				<div id="qBars${question.id}" style="width: 100%; height: 350px;"></div>
+				<div id="qLegend${question.id}"></div>
+				<table>
+				<thead>
+				</thead>
+				
+				<tbody>
+				</tbody>
+				
+				</table>
+			</div>
+						
+		</li>	
+		</t:if>
+		
+		<t:if test="${frequency}">
+		<li>	
+			<div class="questionResultTable">		
+	
+				<h3>${question.content}: ${message:trend-frequency}</h3>
+				<div id="fBars${question.id}" style="width: 100%; height: 350px;"></div>
+				<div id="fLegend${question.id}"></div>
+				<table>
+				
+				<thead>
+				</thead>
+				
+				<tbody>
+				</tbody>
+				
+				</table>
+			</div>
+					
+		</li>	
+		</t:if>
+		
+		<t:if test="${sum}">
+		<li>	
+			<div class="questionResultTable">		
+			<h3>${question.content}: ${message:sum}</h3>
+			<div id="sBars${question.id}" style="width: 100%; height: 350px;"></div>
+			<table>
+			
+			<thead>
+			</thead>
+			
+			<tbody>
+				<tr class="answered">
+					<td colspan="3" class="right">${message:all-answers-quantity}</td>
+					<td>${allAnswerQuantity}</td>
+				</tr>
+			</tbody>
+			
+			</table>
+			</div>
+						
+		</li>
+		</t:if>
+	  <t:parameter name="else">
+	    <t:if test="${sum}">
+	  	<li>
+	  		<div class="questionResultTable">
+			<h3><t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${question.content}: ${message:sum}</t:pagelink></h3>
+			<table>			
+			<thead>
+				<tr>
+				<th class="res">${message:result}</th>
+				<th class="res">${message:responce-percent}</th>
+				<th class="cnt">${message:responce-count}</th>
+				</tr>
+			</thead>
+			
+			<tbody>							
+				<t:loop source="topResults" value="result">
+						<tr>
+							<td>${result.first}</td>
+							<td>${quantityWithFrequencySecond}</td>
+							<td>${quantityWithFrequency.first}</td>
+						</tr>								
+				</t:loop>
+				
+				<tr class="answered">
+					<td colspan="3">
+						<t:pagelink page="result/OpenAnswerList" context="question.id" class="question_link">${message:see-all}...</t:pagelink>
+					</td>
+				</tr>								
+			
+			</tbody>
+			</table>
+			</div>
+		</li>
+		</t:if>	
+	  </t:parameter>					
+	  </t:if>
+	
+	  <hr/>	
+	</t:loop>
+</ul>		
+</t:Layout>

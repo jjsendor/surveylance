@@ -1,0 +1,9 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+	<h1>${message:edit-contact}</h1>
+
+	<t:beaneditform object="contact"
+		reorder="displayName,mail"
+		exclude="id"
+		submitLabel="Update"/> 
+
+</t:Layout>

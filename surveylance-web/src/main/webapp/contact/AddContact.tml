@@ -1,0 +1,11 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:add-new-contact}</h1>
+	<t:beaneditform  object="contact"
+		t:exclude="id"
+		t:reorder="displayName,mail"
+		t:submitLabel="message:create-contact">
+			
+	</t:beaneditform>
+	
+</t:Layout>

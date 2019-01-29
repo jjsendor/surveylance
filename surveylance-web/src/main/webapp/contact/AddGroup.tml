@@ -1,0 +1,13 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:add-new-group}</h1>
+	
+	<t:form t:id="registrationForm"> 
+	
+	<t:label t:for="groupName">${message:groupname-label}</t:label> 
+	
+	<input type="text" t:type="textfield" t:id="groupName" t:value="groupName"/> 
+		<input type="submit" value="${message:create-group}"/>
+	</t:form>
+
+</t:Layout>

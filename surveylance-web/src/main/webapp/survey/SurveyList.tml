@@ -1,0 +1,71 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<t:if test="deleted">
+	<script type="text/javascript">
+		if (gears.available()) {
+			if (!gears.isServedFromLocalStore()) {
+				var deletedSurveyId = ${deletedSurveyId};
+				var gears_survey =
+						gears.survey.findByPersistentId(deletedSurveyId);
+				gears.survey.remove(gears_survey);
+			}
+		}
+	</script>
+	</t:if>
+
+	<script type="text/javascript">
+		var pagesOffline = new Array();
+	</script>
+
+	<h1>${message:surveys-list}</h1>
+	
+	<div class="button_toolbar" style="float: right;">
+		<t:pagelink page="survey/create" class="create_survey button_link">
+			<span>
+				<img src="../images/buttons/add.png" alt="+" />
+				${message:create-new-survey}
+			</span>
+		</t:pagelink>
+	</div>
+	
+	<ul xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd" id="surveys_list">
+		<t:loop source="surveys" value="survey">
+		<li>
+			<script type="text/javascript">
+				pagesOffline.push("edit/${survey.id}");
+				pagesOffline.push("view/${survey.id}");
+			</script>
+			<ul class="edit_panel">
+				<t:if test="${editable}">
+				<li>
+					<t:pagelink page="survey/edit" context="survey.id" class="edit_link">${message:edit}</t:pagelink>
+				</li>
+				<li>
+					<t:actionlink t:id="delete" context="survey.id" class="delete_link">${message:remove}</t:actionlink>
+				</li>
+				</t:if>
+				<li>
+					<t:pagelink page="survey/send" context="survey.id">${message:send}</t:pagelink>
+				</li>
+			</ul>
+			<h3><t:pagelink page="survey/view" context="survey.id" class="survey_link">${survey.name}</t:pagelink></h3>
+			
+			<p>${survey.description}</p>
+		</li>
+		</t:loop>
+	</ul>
+	
+	<script type="text/javascript">
+		if (gears.available()) {
+			var loadPages = function() {
+				if (!gears.isServedFromLocalStore()) {
+					pagesOffline.push(location.pathname);
+					console.debug("Loading pages for offline use.");
+					gears.loadPagesToOfflineUse(pagesOffline);
+				}
+			};
+			
+			dojo.addOnLoad(loadPages);
+		}
+	</script>
+</t:Layout>

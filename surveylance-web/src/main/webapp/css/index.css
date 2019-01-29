@@ -1,0 +1,67 @@
+﻿div#content {
+	width: 740px;
+}
+
+#welcome_menu {
+	position: relative;
+	display: block;
+	float: none;
+	width: 740px;
+	height: 276px;
+	margin: auto;
+	text-align: center;
+}
+
+#welcome_menu li {
+	position: absolute;
+	list-style-type: none;
+}
+
+#surveys_link {
+	top: 0;
+	left: 0;
+}
+
+#analyses_link {
+	top: 0;
+	right: 0;
+}
+
+#contacts_link {
+	bottom: 0;
+	left: 0;
+}
+
+#calendar_link {
+	bottom: 0;
+	right: 0;
+}
+
+#welcome_menu li a {
+	display: block;
+	width: 370px;
+	height: 138px;
+	line-height: 138px;
+	margin: 0;
+	vertical-align: middle;
+	text-align: center;
+	background: transparent url('../images/buttons/section_button.png') no-repeat top;
+	font: 26px/138px Verdana, Tahoma, Helvetica, sans-serif;
+	color: #474746;
+}
+
+#welcome_menu li a:hover {
+	background: transparent url('../images/buttons/section_button.png') no-repeat center;
+	color: #CDD7B6;
+}
+
+#welcome_menu li a:active {
+	background: transparent url('../images/buttons/section_button.png') no-repeat bottom;
+	color: #D7E447;
+}
+
+#welcome_menu li img {
+	float: left;
+	clear: none;
+	vertical-align: middle;
+}

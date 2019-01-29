@@ -1,0 +1,89 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+<t:if test="${normalQuestionsToAnalyse}">
+	<hr/>
+	<t:if test="${equalQuestionsToAnalyse}">
+		<h1>${message:different-questions}</h1>
+	<t:parameter name="else">
+		<h1>${message:questions-to-analyze}</h1>
+	</t:parameter>
+	</t:if>
+	<hr/>
+	
+	<ul>
+		<t:loop source="surveys" value="survey">
+			<h2>${message:survey}: ${survey.name}</h2>
+		
+			<t:loop source="questions" value="question">
+				<h3><t:pagelink page="result/questionsAnalysis" context="question.id" class="question_link">
+					${question.content}
+				</t:pagelink></h3>			
+			</t:loop>
+			
+			<t:if test="${equalQuestionsToAnalyse}">
+				<h3><t:pagelink page="result/questionsAnalysis" context="${normalQuestionsFromSurvey}" class="question_link">${message:see-all3}</t:pagelink></h3>
+			<t:parameter name="else">
+				<h3><t:pagelink page="result/questionsAnalysis" context="${normalQuestionsFromSurvey}" class="question_link">${message:see-all}</t:pagelink></h3>
+			</t:parameter>
+			</t:if>				
+			<br/>
+		</t:loop>	
+	</ul>	
+	
+	<t:if test="${equalQuestionsToAnalyse}">
+		<h2><t:pagelink page="result/questionsAnalysis" context="${allNormalQuestions}" class="question_link">${message:see-all2}</t:pagelink></h2>
+	</t:if>	
+</t:if>
+
+<t:if test="${equalQuestionsToAnalyse}">
+	<br/>
+	<br/>
+	<hr/>
+	<h1>${message:related-questions-one}</h1>	
+	<hr/>
+	
+	<ul>
+		<t:loop source="equalQuestionsList" value="question">
+			<h2>${question.content}</h2>
+			
+			<t:loop source="surveys" value="survey">
+			<h3><t:pagelink page="result/questionsAnalysis" context="${equalQuestion}" class="question_link">
+				${message:survey}: ${survey.name}
+			</t:pagelink></h3>
+			</t:loop>	
+			
+			<h3><t:pagelink page="result/questionsAnalysis" context="${equalQuestions}" class="question_link">${message:see-all5}</t:pagelink></h3>
+			<br/>			
+		</t:loop>
+		
+		<h2><t:pagelink page="result/questionsAnalysis" context="${allEqualQuestions}" class="question_link">${message:see-all4}</t:pagelink></h2>
+	</ul>
+	
+	<br/>
+	<br/>
+	<hr/>
+	<h1>${message:related-questions-together}</h1>	
+	<hr/>
+	
+	<ul>
+		<t:loop source="equalQuestionsList" value="question">	
+			<h2>${question.content}</h2>
+
+			<t:if test="${closedQuestion}">
+				<h3><t:pagelink page="result/trendAndSumAnalysis" context="${quantityTrendQuestions}" class="question_link">${message:trend-quantity}</t:pagelink></h3>
+				<h3><t:pagelink page="result/trendAndSumAnalysis" context="${frequencyTrendQuestions}" class="question_link">${message:trend-frequency}</t:pagelink></h3>
+			</t:if>
+			
+			<h3><t:pagelink page="result/trendAndSumAnalysis" context="${sumQuestions}" class="question_link">${message:sum}</t:pagelink></h3>
+			
+			<t:if test="${closedQuestion}">
+				<h3><t:pagelink page="result/trendAndSumAnalysis" context="${trendAndSumQuestions}" class="question_link">${message:see-all5}</t:pagelink></h3>
+			</t:if>	
+			<br/>
+		</t:loop>
+		
+		<h2><t:pagelink page="result/trendAndSumAnalysis" context="${allTrendAndSumQuestions}" class="question_link">${message:see-all6}</t:pagelink></h2>
+	</ul>			
+</t:if>
+
+</t:Layout>	

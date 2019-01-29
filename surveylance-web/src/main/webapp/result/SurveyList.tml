@@ -1,0 +1,46 @@
+<t:Layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd">
+
+	<h1>${message:choose-survey}</h1>
+	
+	<ul xmlns:t="http://tapestry.apache.org/schema/tapestry_5_0_0.xsd" id="surveys_list">
+		<t:loop source="surveys" value="survey">
+		<li>
+			<!--
+			<t:pagelink page="result/AnalysisMainPage" context="survey.id" class="button_link" style="float: right;">
+			-->
+			<a href="AnalysisMainPage?ids=${survey.id}" class="button_link" style="float: right;">
+				<span>
+					<img src="../images/buttons/offline.png" />
+					Pokaż wyniki
+				</span>
+			</a>
+			<!--
+			</t:pagelink>
+			-->
+			
+			<ul class="edit_panel">
+				<li>
+					<t:pagelink page="result/Map" context="survey.id">${message:map-analysis}</t:pagelink>
+				</li>
+				<li>
+					<a href="#" onclick="addToSurveyChooser(${survey.id}, '${survey.name}')">${message:add-survey-to-campaign}</a>
+				</li>
+			</ul>
+			
+			<!-- <h3><t:pagelink page="result/AnalysisMainPage" context="survey.id" class="survey_link">${survey.name}</t:pagelink></h3> -->
+			<h3><a href="AnalysisMainPage?ids=${survey.id}" class="survey_link">${survey.name}</a></h3>
+			<p>${survey.description}</p>
+		</li>
+		</t:loop>
+	</ul>
+	
+	<fieldset id="surveys_chooser_wrapper">
+		<legend>${message:campaign-survey-chooser}</legend>
+		<ul id="surveys_chooser"></ul>
+	</fieldset>
+	
+	<a href="javascript:goToCampaignAnalysis()" class="button_link"><span>${message:analyse-surveys}</span></a>
+
+	
+</t:Layout>
+
